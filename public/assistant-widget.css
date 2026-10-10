@@ -1,0 +1,712 @@
+/* TCONG INFOTECH Premium AI Assistant Widget */
+
+:root {
+  --tk-brand-dark: #031e21;
+  --tk-brand-surface: #062b30;
+  --tk-brand-surface-card: rgba(255, 255, 255, 0.06);
+  --tk-brand-border: rgba(255, 255, 255, 0.14);
+  --tk-brand-accent: #b7d64a;
+  --tk-brand-accent-hover: #c9e658;
+  --tk-brand-green: #35d47b;
+  --tk-text-primary: #ffffff;
+  --tk-text-secondary: rgba(255, 255, 255, 0.72);
+  --tk-text-muted: rgba(255, 255, 255, 0.45);
+}
+
+/* Floating Launcher */
+.tk-launcher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999990;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #07545b, #09727b);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  padding: 6px 16px 6px 6px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  font-family: inherit;
+}
+
+.tk-launcher:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(135deg, #09656e, #0c828d);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.55), 0 0 20px rgba(183, 214, 74, 0.25);
+}
+
+.tk-launcher:active {
+  transform: scale(0.97);
+}
+
+.tk-launcher-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--tk-brand-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.tk-launcher-avatar img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.tk-status-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 11px;
+  height: 11px;
+  background: var(--tk-brand-green);
+  border: 2px solid var(--tk-brand-dark);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(53, 212, 123, 0.9);
+}
+
+.tk-launcher-label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.tk-launcher-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #fff;
+}
+
+.tk-launcher-subtitle {
+  font-size: 11px;
+  color: var(--tk-brand-accent);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Chat Window Container */
+.tk-chat-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999995;
+  width: 430px;
+  height: 640px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 36px);
+  background: rgba(3, 30, 33, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--tk-brand-border);
+  border-radius: 24px;
+  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.65), 0 0 1px rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+}
+
+.tk-chat-container.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.tk-chat-container.maximized {
+  width: 720px;
+  height: calc(100dvh - 40px);
+  max-width: calc(100vw - 40px);
+}
+
+.tk-chat-container.minimized {
+  height: 72px;
+  width: 320px;
+  overflow: hidden;
+}
+
+/* Header */
+.tk-chat-header {
+  padding: 14px 18px;
+  background: rgba(3, 23, 26, 0.96);
+  border-bottom: 1px solid var(--tk-brand-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.tk-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tk-header-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--tk-brand-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.tk-header-avatar img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.tk-header-avatar .tk-status-badge {
+  width: 10px;
+  height: 10px;
+  background: var(--tk-brand-green);
+  border: 2px solid var(--tk-brand-dark);
+  border-radius: 50%;
+}
+
+.tk-header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.tk-header-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+.tk-header-subtitle {
+  font-size: 11.5px;
+  color: var(--tk-brand-green);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.tk-header-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tk-brand-green);
+  box-shadow: 0 0 6px rgba(53, 212, 123, 0.8);
+  animation: tkPulse 1.6s infinite ease-in-out;
+}
+
+@keyframes tkPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.75); }
+}
+
+.tk-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tk-action-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.tk-action-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.tk-action-btn.close:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+/* Messages Scroll Area */
+.tk-chat-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(183, 214, 74, 0.4) transparent;
+}
+
+.tk-chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tk-chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tk-chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(183, 214, 74, 0.35);
+  border-radius: 10px;
+}
+
+/* Welcome Card */
+.tk-welcome-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--tk-brand-border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.tk-welcome-heading {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tk-welcome-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--tk-text-secondary);
+  margin-bottom: 14px;
+}
+
+.tk-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.tk-suggestion-pill {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tk-suggestion-pill:hover {
+  background: rgba(183, 214, 74, 0.16);
+  border-color: var(--tk-brand-accent);
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+/* Message Rows */
+.tk-msg-row {
+  display: flex;
+  width: 100%;
+}
+
+.tk-msg-row.user {
+  justify-content: flex-end;
+}
+
+.tk-msg-row.assistant {
+  justify-content: flex-start;
+}
+
+.tk-msg-bubble {
+  max-width: 84%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  word-break: break-word;
+  position: relative;
+}
+
+.tk-msg-row.user .tk-msg-bubble {
+  background: linear-gradient(135deg, #a9c936, #d1dc4c);
+  color: #042226;
+  font-weight: 500;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 16px rgba(183, 214, 74, 0.25);
+}
+
+.tk-msg-row.assistant .tk-msg-bubble {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Markdown typography inside assistant bubble */
+.tk-msg-bubble h3, .tk-msg-bubble h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 10px 0 6px 0;
+  color: #ffffff;
+}
+
+.tk-msg-bubble p {
+  margin: 6px 0;
+}
+
+.tk-msg-bubble p:first-child {
+  margin-top: 0;
+}
+
+.tk-msg-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.tk-msg-bubble ul, .tk-msg-bubble ol {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
+.tk-msg-bubble li {
+  margin-bottom: 4px;
+}
+
+.tk-msg-bubble blockquote {
+  margin: 8px 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--tk-brand-accent);
+  color: rgba(255, 255, 255, 0.85);
+  font-style: italic;
+}
+
+.tk-msg-bubble code {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  color: #e2f185;
+}
+
+.tk-msg-bubble pre {
+  background: #021214;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  margin: 8px 0;
+  position: relative;
+}
+
+.tk-msg-bubble pre code {
+  background: none;
+  padding: 0;
+  color: #f1f5f9;
+}
+
+/* Interactive Lead Generation Card inside Chat */
+.tk-lead-card {
+  background: linear-gradient(145deg, rgba(7, 84, 91, 0.4), rgba(4, 40, 44, 0.7));
+  border: 1px solid rgba(183, 214, 74, 0.35);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.tk-lead-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tk-lead-desc {
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.tk-form-group {
+  margin-bottom: 9px;
+}
+
+.tk-form-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 3px;
+}
+
+.tk-form-label span.req {
+  color: #f87171;
+}
+
+.tk-form-input, .tk-form-select, .tk-form-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  color: #fff;
+  padding: 8px 11px;
+  font-size: 12.5px;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.tk-form-input:focus, .tk-form-select:focus, .tk-form-textarea:focus {
+  border-color: var(--tk-brand-accent);
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 2px rgba(183, 214, 74, 0.2);
+}
+
+.tk-form-textarea {
+  resize: vertical;
+  min-height: 52px;
+}
+
+.tk-lead-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #b7d64a, #d4df54);
+  color: #032125;
+  border: none;
+  border-radius: 9px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.tk-lead-submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c4e451, #e3ee63);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(183, 214, 74, 0.35);
+}
+
+.tk-lead-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tk-lead-success {
+  background: rgba(53, 212, 123, 0.12);
+  border: 1px solid rgba(53, 212, 123, 0.35);
+  border-radius: 10px;
+  padding: 12px;
+  color: #d1fae5;
+  font-size: 12.5px;
+  line-height: 1.5;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Typing Indicator */
+.tk-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+}
+
+.tk-typing-dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  animation: tkBounce 1.3s infinite ease-in-out;
+}
+
+.tk-typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.tk-typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes tkBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Composer Area */
+.tk-composer-area {
+  padding: 12px 16px;
+  background: rgba(3, 20, 23, 0.96);
+  border-top: 1px solid var(--tk-brand-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.tk-composer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+
+.tk-trigger-quote-btn {
+  background: none;
+  border: none;
+  color: var(--tk-brand-accent);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.2s;
+}
+
+.tk-trigger-quote-btn:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.tk-composer-box {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 6px 8px 6px 14px;
+  transition: all 0.2s ease;
+}
+
+.tk-composer-box:focus-within {
+  border-color: var(--tk-brand-accent);
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: 0 0 0 2px rgba(183, 214, 74, 0.15);
+}
+
+.tk-composer-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 13.5px;
+  line-height: 1.45;
+  outline: none;
+  resize: none;
+  max-height: 110px;
+  min-height: 24px;
+  padding: 5px 0;
+  font-family: inherit;
+}
+
+.tk-composer-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.tk-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #b7d64a, #d4df54);
+  border: none;
+  color: #032125;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tk-send-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #c4e451, #e3ee63);
+  box-shadow: 0 4px 12px rgba(183, 214, 74, 0.4);
+}
+
+.tk-send-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .tk-launcher {
+    bottom: 18px;
+    right: 18px;
+    padding: 5px 12px 5px 5px;
+  }
+  .tk-launcher-avatar {
+    width: 36px;
+    height: 36px;
+  }
+  .tk-launcher-title {
+    font-size: 12.5px;
+  }
+  .tk-chat-container {
+    width: auto;
+    height: auto;
+    max-height: calc(100dvh - 16px);
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    border-radius: 20px;
+  }
+  .tk-chat-container.maximized {
+    width: auto;
+    left: 8px;
+    right: 8px;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Tcongs Infotech",
+  "description": "Tcongs Infotech builds custom software, web and mobile applications for growing businesses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
