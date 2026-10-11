@@ -616,7 +616,7 @@ app.post('/api/assistant/chat', async (req: Request, res: Response) => {
           apiKey,
           httpOptions: {
             headers: {
-              'User-Agent': 'aistudio-build',
+              'User-Agent': 'tcongs-infotech-engine',
             },
           },
         });

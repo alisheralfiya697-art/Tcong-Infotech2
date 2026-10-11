@@ -1,6 +1,26 @@
 <!doctype html>
 <html lang="en">
   <head>
+<script>
+(function(){
+  try {
+    var filter = function(m) {
+      if (!m) return false;
+      var s = typeof m === 'string' ? m : (m.message || String(m));
+      return /AI Studio|HMR|hmr|vite|WebSocket|webpackHotUpdate/i.test(s);
+    };
+    ['log', 'warn', 'info', 'debug', 'error'].forEach(function(k) {
+      var orig = console[k];
+      console[k] = function() {
+        for (var i = 0; i < arguments.length; i++) {
+          if (filter(arguments[i])) return;
+        }
+        orig.apply(console, arguments);
+      };
+    });
+  } catch(e) {}
+})();
+</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tcongs Infotech | Custom Software Development</title>

@@ -1,4 +1,24 @@
-<!DOCTYPE html><html lang="en" data-scroll-behavior="smooth"><head><script>
+<!DOCTYPE html><html lang="en" data-scroll-behavior="smooth"><head>
+<script>
+(function(){
+  try {
+    var filter = function(m) {
+      if (!m) return false;
+      var s = typeof m === 'string' ? m : (m.message || String(m));
+      return /AI Studio|HMR|hmr|vite|WebSocket|webpackHotUpdate/i.test(s);
+    };
+    ['log', 'warn', 'info', 'debug', 'error'].forEach(function(k) {
+      var orig = console[k];
+      console[k] = function() {
+        for (var i = 0; i < arguments.length; i++) {
+          if (filter(arguments[i])) return;
+        }
+        orig.apply(console, arguments);
+      };
+    });
+  } catch(e) {}
+})();
+</script><script>
 window.addEventListener('error', function(e) {
   if (e && e.message && (e.message.includes('418') || e.message.includes('423') || e.message.includes('425') || e.message.includes('Hydration'))) {
     e.preventDefault();
